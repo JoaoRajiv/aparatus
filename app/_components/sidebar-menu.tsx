@@ -6,6 +6,7 @@ import {
   HomeIcon,
   LogInIcon,
   LogOutIcon,
+  Scissors,
 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -101,8 +102,9 @@ const SidebarMenu = () => {
         </Link>
         <Link
           href="/barbershops?search=cabelo"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <Scissors className="size-4" />
           <span className="text-sm font-medium">Cabelo</span>
         </Link>
         <Link

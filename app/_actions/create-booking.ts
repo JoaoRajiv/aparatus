@@ -1,11 +1,10 @@
 "use server";
-
-import { z } from "zod";
-import { returnValidationErrors } from "next-safe-action";
 import { actionClient } from "@/lib/action-client";
-import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { returnValidationErrors } from "next-safe-action";
 import { headers } from "next/headers";
+import { z } from "zod";
 
 const inputSchema = z.object({
   serviceId: z.uuid(),
@@ -18,20 +17,22 @@ export const createBooking = actionClient
     const session = await auth.api.getSession({
       headers: await headers(),
     });
-    if (!session) {
+    if (!session?.user) {
       returnValidationErrors(inputSchema, {
-        _errors: ["Usuário não autenticado"],
+        _errors: ["Unauthorized"],
       });
     }
     const service = await prisma.barbershopService.findUnique({
-      where: { id: serviceId },
+      where: {
+        id: serviceId,
+      },
     });
     if (!service) {
       returnValidationErrors(inputSchema, {
-        _errors: ["Serviço não encontrado"],
+        _errors: ["Service not found"],
       });
     }
-    // verificar disponibilidade, usuário, etc...
+    // verificar se já existe agendamento para essa data
     const existingBooking = await prisma.booking.findFirst({
       where: {
         barbershopId: service.barbershopId,
@@ -39,9 +40,9 @@ export const createBooking = actionClient
       },
     });
     if (existingBooking) {
-      console.log("Horário não disponível:", date);
+      console.error("Já existe um agendamento para essa data.");
       returnValidationErrors(inputSchema, {
-        _errors: ["Horário não disponível"],
+        _errors: ["Já existe um agendamento para essa data."],
       });
     }
     const booking = await prisma.booking.create({

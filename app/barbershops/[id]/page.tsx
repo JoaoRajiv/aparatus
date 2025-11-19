@@ -33,6 +33,8 @@ const BarbershopPage = async (props: PageProps<"/barbershops/[id]">) => {
             src={barbershop.imageUrl}
             alt={barbershop.name}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            loading="eager"
             className="object-cover"
           />
         </div>
@@ -63,6 +65,7 @@ const BarbershopPage = async (props: PageProps<"/barbershops/[id]">) => {
                   src={barbershop.imageUrl}
                   alt={barbershop.name}
                   fill
+                  sizes="100vw"
                   className="object-cover"
                 />
               </div>
