@@ -70,7 +70,7 @@ export default function ChatPage() {
 
   return (
     <div className="relative flex h-screen w-full flex-col overflow-hidden rounded-[20px] bg-background">
-      <div className="flex w-full items-center justify-between pt-6 pr-5 pb-0 pl-5">
+      <div className="flex w-full items-center justify-between py-6 pr-5 pl-5 bg-muted">
         <Link href="/">
           <ChevronLeft className="size-6 shrink-0" />
         </Link>

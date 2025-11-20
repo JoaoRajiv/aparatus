@@ -181,9 +181,6 @@ export const POST = async (request: Request) => {
     },
   });
 
-  console.log("Original messages count:", messages.length);
-  console.log("Creating UI message stream response...\n");
-
   return result.toUIMessageStreamResponse({
     originalMessages: messages,
   });
