@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { BarbershopService, Barbershop } from "@/app/generated/prisma/client";
+import { BarbershopService, Barbershop } from "@/generated/prisma/client";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -131,7 +131,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
       <div className="border-border bg-card flex items-center justify-center gap-3 rounded-2xl border border-solid p-3">
         <div className="relative size-[110px] shrink-0 overflow-hidden rounded-[10px]">
           <Image
-            src={service.barbershop.imageUrl}
+            src={service.barbershop.imageUrl || ""}
             alt={service.name}
             fill
             className="object-cover"

@@ -29,7 +29,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
-import { Booking } from "@/app/generated/prisma/client";
+import { Booking } from "@/generated/prisma/client";
 
 interface BookingItemProps {
   booking: {
@@ -43,7 +43,7 @@ interface BookingItemProps {
     barbershop: {
       id: string;
       name: string;
-      imageUrl: string;
+      imageUrl: string | null;
       address: string;
       phones: string[];
     };
@@ -113,7 +113,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <p className="font-bold">{booking.service.name}</p>
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                  <AvatarImage src={booking.barbershop.imageUrl} />
+                  <AvatarImage src={booking.barbershop.imageUrl || ""} />
                 </Avatar>
                 <p className="text-sm">{booking.barbershop.name}</p>
               </div>
@@ -156,7 +156,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             <div className="bg-background absolute right-5 bottom-5 left-5 rounded-lg p-5">
               <div className="flex items-center gap-3">
                 <Avatar className="h-12 w-12">
-                  <AvatarImage src={booking.barbershop.imageUrl} />
+                  <AvatarImage src={booking.barbershop.imageUrl || ""} />
                 </Avatar>
                 <div className="flex-1">
                   <p className="font-bold">{booking.barbershop.name}</p>

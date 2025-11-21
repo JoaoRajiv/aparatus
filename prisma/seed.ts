@@ -1,4 +1,4 @@
-import { PrismaClient } from "../app/generated/prisma/client.js";
+import { PrismaClient } from "../generated/prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -129,6 +129,7 @@ async function seedDatabase() {
                 id: barbershop.id,
               },
             },
+            imageUrl: service.imageUrl || null,
           },
         });
       }

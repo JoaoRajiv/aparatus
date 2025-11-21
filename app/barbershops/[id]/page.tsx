@@ -30,7 +30,7 @@ const BarbershopPage = async (props: PageProps<"/barbershops/[id]">) => {
       <div className="relative h-[297px] w-full">
         <div className="absolute top-0 left-0 h-full w-full">
           <Image
-            src={barbershop.imageUrl}
+            src={barbershop.imageUrl || ""}
             alt={barbershop.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -62,7 +62,7 @@ const BarbershopPage = async (props: PageProps<"/barbershops/[id]">) => {
             <div className="flex items-start gap-1.5 ">
               <div className="relative size-[30px] shrink-0 overflow-hidden rounded-full">
                 <Image
-                  src={barbershop.imageUrl}
+                  src={barbershop.imageUrl || ""}
                   alt={barbershop.name}
                   fill
                   sizes="100vw"
