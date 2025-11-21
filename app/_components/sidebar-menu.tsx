@@ -3,10 +3,15 @@
 import { authClient } from "@/lib/auth-client";
 import {
   CalendarDaysIcon,
+  Eye,
+  Footprints,
   HomeIcon,
   LogInIcon,
   LogOutIcon,
   Scissors,
+  Sparkles,
+  User,
+  Waves,
 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -30,7 +35,7 @@ const SidebarMenu = () => {
   };
 
   return (
-    <div className="flex h-full flex-col gap-6 py-4">
+    <div className="flex h-full flex-col gap-6 py-4 pl-2">
       {/* User Section */}
       <div className="px-5">
         {session?.user ? (
@@ -96,8 +101,9 @@ const SidebarMenu = () => {
       <div className="flex flex-col gap-1 ">
         <Link
           href="/barbershops?search=barba"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <User className="size-4" />
           <span className="text-sm font-medium">Barba</span>
         </Link>
         <Link
@@ -109,26 +115,30 @@ const SidebarMenu = () => {
         </Link>
         <Link
           href="/barbershops?search=acabamento"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <Sparkles className="size-4" />
           <span className="text-sm font-medium">Acabamento</span>
         </Link>
         <Link
           href="/barbershops?search=sobrancelha"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <Eye className="size-4" />
           <span className="text-sm font-medium">Sobrancelha</span>
         </Link>
         <Link
           href="/barbershops?search=pézinho"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <Footprints className="size-4" />
           <span className="text-sm font-medium">Pézinho</span>
         </Link>
         <Link
           href="/barbershops?search=progressiva"
-          className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+          className="flex items-center gap-2 h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
         >
+          <Waves className="size-4" />
           <span className="text-sm font-medium">Progressiva</span>
         </Link>
       </div>

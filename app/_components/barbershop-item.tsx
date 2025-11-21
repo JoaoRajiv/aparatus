@@ -20,7 +20,7 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
         sizes="(max-width: 768px) 100vw, 300px"
         className="object-cover rounded-xl"
       />
-      <div className="absolute bottom-0 left-0 right-0 z-20 p-4">
+      <div className="absolute bottom-0 left-0 right-0 z-20 p-4 dark:invert">
         <h3 className="text-background text-lg font-semibold">
           {barbershop.name}
         </h3>

@@ -181,7 +181,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
           {selectedDate && (
             <>
               <Separator />
-
+              {}
               <div className="flex gap-3 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
                 {availableTimeSlots?.data?.map((time: string) => (
                   <Button

@@ -4,7 +4,7 @@ import { PageSectionScroller } from "./ui/page";
 
 const QuickSearchButtons = () => {
   return (
-    <PageSectionScroller>
+    <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden ">
       <Link
         href="/barbershops?search=cabelo"
         className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"
@@ -60,7 +60,7 @@ const QuickSearchButtons = () => {
           Progressiva
         </span>
       </Link>
-    </PageSectionScroller>
+    </div>
   );
 };
 

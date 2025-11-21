@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="p-7 bg-muted">
+    <footer className="p-7 bg-muted w-full bottom-0 ">
       <p className="text-sm text-center text-foreground">
         © 2025 Aparatus. All rights reserved.
       </p>

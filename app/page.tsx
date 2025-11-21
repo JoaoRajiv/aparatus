@@ -25,7 +25,7 @@ const Home = async () => {
     },
   });
   return (
-    <main>
+    <main className="pt-18">
       <Header />
       <PageContainer>
         <SearchInput />
