@@ -22,9 +22,15 @@ const Header = () => {
   const { data: session } = authClient.useSession();
 
   return (
-    <header className="flex items-center justify-between bg-white px-5 py-6">
+    <header className="flex fixed top-0 left-0 right-0 items-center justify-between bg-white mb-2 px-5 py-5 shadow-md">
       <Link href={"/"}>
-        <Image src="/logo.svg" alt="Aparatus" width={100} height={26.09} />
+        <Image
+          src="/logo.svg"
+          className="bg-transparent"
+          alt="Aparatus"
+          width={100}
+          height={26.09}
+        />
       </Link>
       <div className="flex items-center gap-2">
         <Button variant="outline" size="icon" asChild>
