@@ -16,13 +16,22 @@ const inputSchema = z.object({
 export const createBookingCheckoutSession = actionClient
   .inputSchema(inputSchema)
   .action(async ({ parsedInput: { serviceId, date } }) => {
+    console.log("\n=== CREATE BOOKING CHECKOUT SESSION ===");
+    console.log("ServiceId:", serviceId);
+    console.log("Date:", date);
+
     if (!process.env.STRIPE_SECRET_KEY) {
+      console.error("STRIPE_SECRET_KEY is not set");
       throw new Error("STRIPE_SECRET_KEY is not set");
     }
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
+    console.log("User session:", session?.user?.id);
+
     if (!session?.user) {
+      console.error("Unauthorized - no user session");
       returnValidationErrors(inputSchema, {
         _errors: ["Unauthorized"],
       });
@@ -35,25 +44,37 @@ export const createBookingCheckoutSession = actionClient
         barbershop: true,
       },
     });
+    console.log("Service found:", service?.id, service?.name);
+
     if (!service) {
+      console.error("Service not found:", serviceId);
       returnValidationErrors(inputSchema, {
         _errors: ["Service not found"],
       });
     }
+
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
       apiVersion: "2025-11-17.clover",
     });
+
+    const metadata = {
+      serviceId: service.id,
+      barbershopId: service.barbershopId,
+      userId: session.user.id,
+      date: date.toISOString(),
+    };
+
+    console.log(
+      "Creating Stripe checkout session with metadata:",
+      JSON.stringify(metadata, null, 2)
+    );
+
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/bookings`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
-      metadata: {
-        serviceId: service.id,
-        barbershopId: service.barbershopId,
-        userId: session.user.id,
-        date: date.toISOString(),
-      },
+      metadata,
       line_items: [
         {
           price_data: {
@@ -69,5 +90,14 @@ export const createBookingCheckoutSession = actionClient
         },
       ],
     });
-    return checkoutSession;
+
+    console.log("Checkout session created:", checkoutSession.id);
+    console.log("Redirect URL:", checkoutSession.url);
+    console.log("===\n");
+
+    // Retornar apenas os dados serializáveis necessários
+    return {
+      id: checkoutSession.id,
+      url: checkoutSession.url,
+    };
   });

@@ -45,7 +45,6 @@ const BookingsPage = async () => {
 
   return (
     <main className="flex h-screen min-h-screen flex-col">
-      <Header />
       <div className="flex-1">
         <PageContainer>
           <h1 className="text-foreground text-xl font-bold">Agendamentos</h1>

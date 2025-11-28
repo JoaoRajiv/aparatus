@@ -23,7 +23,7 @@ const Header = () => {
   const { data: session } = authClient.useSession();
 
   return (
-    <header className="fixed flex top-0 left-0 right-0 items-center justify-between px-5 pb-3 pt-4 shadow-md bg-white/30 dark:bg-black/30 z-50 backdrop-blur-lg dark:backdrop-blur-lg">
+    <header className="flex top-0 left-0 right-0 items-center justify-between px-5 pb-3 pt-4 shadow-md bg-white/3 dark:bg-black/30 z-50 backdrop-blur-xl dark:backdrop-blur-lg">
       <Link href={"/"}>
         <Image
           src="/logo.svg"

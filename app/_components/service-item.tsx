@@ -16,7 +16,6 @@ import { useState } from "react";
 import { ptBR } from "date-fns/locale";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
-import { create } from "domain";
 import { createBooking } from "../_actions/create-booking";
 import { useQuery } from "@tanstack/react-query";
 import { getAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
@@ -106,24 +105,6 @@ export function ServiceItem({ service }: ServiceItemProps) {
     await stripe.redirectToCheckout({
       sessionId: checkoutSessionResult.data.id,
     });
-
-    // if (!selectedTime || !selectedDate) {
-    //   return;
-    // }
-
-    // const result = await executeAsync({
-    //   serviceId: service.id,
-    //   date,
-    // });
-
-    // if (result.serverError || result.validationErrors) {
-    //   toast.error(result.validationErrors?._errors?.[0]);
-    //   return;
-    // }
-    // toast.success("Agendamento criado com sucesso!");
-    // setSelectedDate(undefined);
-    // setSelectedTime(undefined);
-    // setSheetIsOpen(false);
   };
 
   return (
