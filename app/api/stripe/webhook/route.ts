@@ -19,8 +19,21 @@ export const POST = async (request: Request) => {
 
   let event: Stripe.Event;
 
-  // Em desenvolvimento, se não houver webhook secret, parse manualmente
-  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+  // Permitir pular verificação em desenvolvimento se a variável estiver definida
+  const skipVerification =
+    process.env.NODE_ENV === "development" &&
+    process.env.STRIPE_WEBHOOK_SKIP_VERIFICATION === "true";
+
+  if (skipVerification) {
+    console.warn("⚠️  SKIPPING SIGNATURE VERIFICATION (DEV ONLY) ⚠️");
+    try {
+      event = JSON.parse(body) as Stripe.Event;
+      console.log("Event parsed without verification, type:", event.type);
+    } catch (err) {
+      console.error("Failed to parse event body:", err);
+      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    }
+  } else if (!process.env.STRIPE_WEBHOOK_SECRET) {
     console.warn(
       "WARNING: STRIPE_WEBHOOK_SECRET not set - skipping signature verification (DEV ONLY)"
     );
@@ -32,7 +45,7 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
   } else {
-    // Em produção, sempre verificar a assinatura
+    // Verificar a assinatura
     const signature = request.headers.get("stripe-signature");
     if (!signature) {
       console.error("Missing stripe-signature header");
@@ -51,10 +64,30 @@ export const POST = async (request: Request) => {
         "Webhook signature verification failed:",
         err instanceof Error ? err.message : err
       );
-      return NextResponse.json(
-        { error: "Webhook signature verification failed" },
-        { status: 400 }
-      );
+
+      // Em desenvolvimento, tentar parsear mesmo com falha de verificação
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "⚠️  Attempting to parse event despite verification failure (DEV ONLY) ⚠️"
+        );
+        try {
+          event = JSON.parse(body) as Stripe.Event;
+          console.log(
+            "Event parsed after verification failure, type:",
+            event.type
+          );
+        } catch (parseErr) {
+          return NextResponse.json(
+            { error: "Webhook signature verification failed" },
+            { status: 400 }
+          );
+        }
+      } else {
+        return NextResponse.json(
+          { error: "Webhook signature verification failed" },
+          { status: 400 }
+        );
+      }
     }
   }
   if (event.type === "checkout.session.completed") {
