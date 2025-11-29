@@ -1,12 +1,7 @@
 "use client";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import {
-  LogInIcon,
-  LogOutIcon,
-  MenuIcon,
-  MessageCircleIcon,
-} from "lucide-react";
+import { MenuIcon, MessageCircleIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import {
@@ -23,7 +18,7 @@ const Header = () => {
   const { data: session } = authClient.useSession();
 
   return (
-    <header className="flex top-0 left-0 right-0 items-center justify-between px-5 pb-3 pt-4 shadow-md bg-white/3 dark:bg-black/30 z-50 backdrop-blur-xl dark:backdrop-blur-lg">
+    <header className="fixed flex top-0 left-0 right-0 items-center justify-between px-5 pb-3 pt-4 shadow-md bg-white/10 dark:bg-black/10 z-50 backdrop-blur-xl dark:backdrop-blur-lg">
       <Link href={"/"}>
         <Image
           src="/logo.svg"

@@ -8,6 +8,11 @@ export const runtime = "nodejs";
 
 export const POST = async (request: Request) => {
   console.log("\n=== STRIPE WEBHOOK RECEIVED ===");
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+  console.log(
+    "Has STRIPE_WEBHOOK_SECRET:",
+    !!process.env.STRIPE_WEBHOOK_SECRET
+  );
 
   if (!process.env.STRIPE_SECRET_KEY) {
     console.error("Missing STRIPE_SECRET_KEY");
@@ -66,19 +71,30 @@ export const POST = async (request: Request) => {
       );
 
       // Em desenvolvimento, tentar parsear mesmo com falha de verificação
-      if (process.env.NODE_ENV === "development") {
+      console.log(
+        "Checking if should fallback to parse - NODE_ENV:",
+        process.env.NODE_ENV
+      );
+      if (process.env.NODE_ENV === "development" || !process.env.NODE_ENV) {
         console.warn(
           "⚠️  Attempting to parse event despite verification failure (DEV ONLY) ⚠️"
         );
         try {
           event = JSON.parse(body) as Stripe.Event;
           console.log(
-            "Event parsed after verification failure, type:",
+            "✅ Event parsed after verification failure, type:",
             event.type
           );
         } catch (parseErr) {
+          console.error(
+            "Failed to parse body after verification failure:",
+            parseErr
+          );
           return NextResponse.json(
-            { error: "Webhook signature verification failed" },
+            {
+              error:
+                "Webhook signature verification failed and could not parse body",
+            },
             { status: 400 }
           );
         }

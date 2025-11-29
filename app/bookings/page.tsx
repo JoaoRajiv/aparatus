@@ -44,9 +44,10 @@ const BookingsPage = async () => {
   );
 
   return (
-    <main className="flex h-screen min-h-screen flex-col">
+    <main className="flex h-screen min-h-screen flex-col mt-16">
       <div className="flex-1">
         <PageContainer>
+          <Header />
           <h1 className="text-foreground text-xl font-bold">Agendamentos</h1>
 
           {confirmedBookings.length > 0 && (

@@ -25,8 +25,9 @@ const Home = async () => {
     },
   });
   return (
-    <main>
+    <main className="mt-16">
       <PageContainer>
+        <Header />
         <SearchInput />
 
         <QuickSearchButtons />
