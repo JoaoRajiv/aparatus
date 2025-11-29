@@ -50,18 +50,32 @@ interface BookingItemProps {
   };
 }
 
+// Converte data UTC do banco para timezone local (Brasília)
+const convertUTCToLocal = (utcDate: Date): Date => {
+  // A data vem como UTC do banco, mas queremos tratá-la como se fosse local
+  // Por exemplo: "2025-11-29T13:30:00Z" deve ser exibido como 13:30 (não 10:30)
+  const year = utcDate.getUTCFullYear();
+  const month = utcDate.getUTCMonth();
+  const day = utcDate.getUTCDate();
+  const hours = utcDate.getUTCHours();
+  const minutes = utcDate.getUTCMinutes();
+
+  // Criar nova data no timezone local com os mesmos valores
+  return new Date(year, month, day, hours, minutes);
+};
+
 const getStatus = (booking: Pick<Booking, "date" | "cancelled">) => {
   if (booking.cancelled) {
     return "cancelled";
   }
-  const date = new Date(booking.date);
+  const date = convertUTCToLocal(new Date(booking.date));
   const now = new Date();
   return date >= now ? "confirmed" : "finished";
 };
 
 const BookingItem = ({ booking }: BookingItemProps) => {
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
-
+  const displayDate = convertUTCToLocal(new Date(booking.date));
   const { execute: executeCancelBooking } = useAction(cancelBooking, {
     onSuccess: ({ data }) => {
       setSheetIsOpen(false);
@@ -122,13 +136,13 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
           <div className="flex h-full w-[106px] flex-col items-center justify-center border-l py-3">
             <p className="text-xs capitalize">
-              {booking.date.toLocaleDateString("pt-BR", { month: "long" })}
+              {displayDate.toLocaleDateString("pt-BR", { month: "long" })}
             </p>
             <p className="text-2xl">
-              {booking.date.toLocaleDateString("pt-BR", { day: "2-digit" })}
+              {displayDate.toLocaleDateString("pt-BR", { day: "2-digit" })}
             </p>
             <p className="text-xs">
-              {booking.date.toLocaleTimeString("pt-BR", {
+              {displayDate.toLocaleTimeString("pt-BR", {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
@@ -193,7 +207,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             <div className="text-muted-foreground flex items-center justify-between text-sm">
               <p>Data</p>
               <p>
-                {booking.date.toLocaleDateString("pt-BR", {
+                {displayDate.toLocaleDateString("pt-BR", {
                   day: "2-digit",
                   month: "long",
                 })}
@@ -202,7 +216,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             <div className="text-muted-foreground flex items-center justify-between text-sm">
               <p>Horário</p>
               <p>
-                {booking.date.toLocaleTimeString("pt-BR", {
+                {displayDate.toLocaleTimeString("pt-BR", {
                   hour: "2-digit",
                   minute: "2-digit",
                 })}
