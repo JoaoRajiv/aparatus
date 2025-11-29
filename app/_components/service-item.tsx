@@ -79,14 +79,21 @@ export function ServiceItem({ service }: ServiceItemProps) {
       return;
     }
     const timeSplitted = selectedTime.split(":"); // [10, 00]
-    const hours = timeSplitted[0];
-    const minutes = timeSplitted[1];
+    const hours = Number(timeSplitted[0]);
+    const minutes = Number(timeSplitted[1]);
+
+    // Criar data em UTC para garantir que o horário escolhido seja preservado
     const date = new Date(selectedDate);
-    date.setHours(Number(hours), Number(minutes));
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    // Usar Date.UTC para criar uma data em UTC com o horário escolhido
+    const utcDate = new Date(Date.UTC(year, month, day, hours, minutes, 0, 0));
 
     const checkoutSessionResult = await executeCreateBookingCheckoutSession({
       serviceId: service.id,
-      date,
+      date: utcDate,
     });
     if (
       checkoutSessionResult.serverError ||

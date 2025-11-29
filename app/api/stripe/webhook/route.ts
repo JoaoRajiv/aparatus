@@ -112,9 +112,21 @@ export const POST = async (request: Request) => {
     console.log("Session ID:", session.id);
     console.log("Session metadata:", session.metadata);
 
-    const date = session.metadata?.date
-      ? new Date(session.metadata.date)
-      : null;
+    // Parse a data mantendo o horário original (sem conversão de timezone)
+    let date: Date | null = null;
+    if (session.metadata?.date) {
+      // A data vem no formato ISO: "2025-11-29T13:30:00.000Z"
+      // Vamos parseá-la diretamente sem conversão de timezone
+      const dateString = session.metadata.date;
+      date = new Date(dateString);
+      console.log("Original date string:", dateString);
+      console.log("Parsed date (UTC):", date.toISOString());
+      console.log(
+        "Parsed date (local):",
+        date.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+      );
+    }
+
     const serviceId = session.metadata?.serviceId;
     const barbershopId = session.metadata?.barbershopId;
     const userId = session.metadata?.userId;
