@@ -81,8 +81,14 @@ export function ServiceItem({ service }: ServiceItemProps) {
     const timeSplitted = selectedTime.split(":"); // [10, 00]
     const hours = timeSplitted[0];
     const minutes = timeSplitted[1];
-    const date = new Date(selectedDate);
-    date.setHours(Number(hours), Number(minutes));
+
+    // Criar data no timezone de Brasília (UTC-3)
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const day = selectedDate.getDate();
+    const date = new Date(year, month, day, Number(hours), Number(minutes));
+
+    date.setHours(date.getHours());
 
     const checkoutSessionResult = await executeCreateBookingCheckoutSession({
       serviceId: service.id,

@@ -29,30 +29,18 @@ const BookingsPage = async () => {
       barbershop: true,
     },
     orderBy: {
-      date: "desc",
+      date: "asc",
     },
   });
 
   const now = new Date();
 
-  // Função para converter data UTC para local
-  const convertUTCToLocal = (utcDate: Date): Date => {
-    const year = utcDate.getUTCFullYear();
-    const month = utcDate.getUTCMonth();
-    const day = utcDate.getUTCDate();
-    const hours = utcDate.getUTCHours();
-    const minutes = utcDate.getUTCMinutes();
-    return new Date(year, month, day, hours, minutes);
-  };
-
   const confirmedBookings = bookings.filter(
-    (booking) =>
-      !booking.cancelled && convertUTCToLocal(new Date(booking.date)) >= now
+    (booking) => !booking.cancelled && new Date(booking.date) >= now
   );
 
   const finishedBookings = bookings.filter(
-    (booking) =>
-      booking.cancelled || convertUTCToLocal(new Date(booking.date)) < now
+    (booking) => booking.cancelled || new Date(booking.date) < now
   );
 
   return (
