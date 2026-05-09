@@ -18,8 +18,8 @@ const Header = () => {
   authClient.useSession();
 
   return (
-    <header className=" fixed inset-x-0 top-0 z-50 bg-white/10 shadow-md backdrop-blur-xl dark:bg-black/10 dark:backdrop-blur-lg">
-      <div className="container mx-auto flex w-full max-w-6xl items-center justify-between px-5 pb-3 pt-4 sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 bg-white/10 shadow-md backdrop-blur-xl dark:bg-black/10 dark:backdrop-blur-lg">
+      <div className="container mx-auto flex w-full items-center justify-between p-5">
         <Link href={"/"}>
           <Image
             src="/logo.svg"

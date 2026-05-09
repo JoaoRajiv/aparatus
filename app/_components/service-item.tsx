@@ -31,6 +31,7 @@ interface ServiceItemProps {
 export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [selectedTime, setSelectedTime] = useState<string | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { executeAsync, isPending } = useAction(createBooking);
   const { executeAsync: executeCreateBookingCheckoutSession } = useAction(
     createBookingCheckoutSession,
