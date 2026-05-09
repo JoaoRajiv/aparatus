@@ -33,11 +33,11 @@ export function ServiceItem({ service }: ServiceItemProps) {
   const [selectedTime, setSelectedTime] = useState<string | undefined>();
   const { executeAsync, isPending } = useAction(createBooking);
   const { executeAsync: executeCreateBookingCheckoutSession } = useAction(
-    createBookingCheckoutSession
+    createBookingCheckoutSession,
   );
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
 
-  const { data: availableTimeSlots } = useQuery({
+  const { data: availableTimeSlots, isFetching } = useQuery({
     queryKey: ["date-available-time-slots", service.barbershopId, selectedDate],
     queryFn: () =>
       getAvailableTimeSlots({
@@ -45,6 +45,9 @@ export function ServiceItem({ service }: ServiceItemProps) {
         date: selectedDate!,
       }),
     enabled: Boolean(selectedDate),
+    staleTime: 1000 * 60 * 1,
+    gcTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true,
   });
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -102,7 +105,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
       return;
     }
     const stripe = await loadStripe(
-      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
     );
     if (!stripe || !checkoutSessionResult.data?.id) {
       toast.error("Erro ao carregar Stripe");
@@ -169,7 +172,9 @@ export function ServiceItem({ service }: ServiceItemProps) {
             <>
               <Separator />
               {}
-              <div className="flex gap-3 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
+              <div
+                className={`flex gap-3 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden transition-opacity ${isFetching ? "opacity-50 pointer-events-none" : ""}`}
+              >
                 {availableTimeSlots?.data?.map((time: string) => (
                   <Button
                     key={time}
