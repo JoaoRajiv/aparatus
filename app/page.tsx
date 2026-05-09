@@ -11,12 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/app/_components/ui/carousel";
-import {
-  PageContainer,
-  PageSection,
-  PageSectionScroller,
-  PageSectionTitle,
-} from "./_components/ui/page";
+import { PageContainer, PageSectionTitle } from "./_components/ui/page";
 import QuickSearchButtons from "./_components/quick-search-buttons";
 import getRecommendedBarbershops from "./_actions/get-recommended-barbershops copy";
 import getPopularBarbershops from "./_actions/get-popular-barbershops";
@@ -38,7 +33,7 @@ const Home = async () => {
       <PageContainer>
         <Header />
 
-        <div className="container mx-auto rounded-lg mt-4 lg:max-h-110 overflow-hidden grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-4">
+        <div className="container mx-auto rounded-lg mt-4 lg:h-110  grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-4">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <h1 className="text-2xl font-bold">
@@ -60,13 +55,22 @@ const Home = async () => {
             <SearchInput />
             <QuickSearchButtons />
           </div>
-          <Image
-            src={banner}
-            alt="Agende agora!"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-            priority
-          />
+          <div className="lg:relative rounded-lg overflow-hidden">
+            <Image
+              src={banner}
+              alt="Agende agora!"
+              // Sem o fill, o Next.js exige width e height para evitar Layout Shift.
+              // Coloque as dimensões aproximadas reais do seu arquivo banner.png
+              width={1200}
+              height={600}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="
+              w-full h-auto object-contain 
+              lg:absolute lg:inset-0 lg:h-full lg:w-full lg:object-contain lg:object-center
+            "
+              priority
+            />
+          </div>
         </div>
 
         <PageSectionTitle>Recomendados</PageSectionTitle>
