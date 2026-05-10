@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const QuickSearchButtons = () => {
   return (
-    <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden lg:flex-wrap ">
+    <div className="flex flex-wrap gap-4 overflow-x-scroll [&::-webkit-scrollbar]:hidden  ">
       <Link
         href="/barbershops?search=cabelo"
         className="border-border bg-card-background flex shrink-0 items-center justify-center gap-3 rounded-3xl border px-4 py-2"

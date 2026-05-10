@@ -78,7 +78,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
     },
     onError: ({ error }) => {
       toast.error(
-        error.serverError || "Erro ao cancelar reserva. Tente novamente."
+        error.serverError || "Erro ao cancelar reserva. Tente novamente.",
       );
     },
   });

@@ -19,6 +19,8 @@ import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import BookingItem from "./_components/booking-item";
+import { prisma } from "@/lib/prisma";
 
 const Home = async () => {
   const recommendedBarbershops = await getRecommendedBarbershops();
@@ -28,12 +30,31 @@ const Home = async () => {
     headers: await headers(),
   });
 
+  const bookings = await prisma.booking.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+    include: {
+      service: true,
+      barbershop: true,
+    },
+    orderBy: {
+      date: "asc",
+    },
+  });
+
+  const now = new Date();
+
+  const confirmedBookings = bookings.filter(
+    (booking) => !booking.cancelled && new Date(booking.date) >= now,
+  );
+
   return (
     <main className="mt-16">
       <PageContainer>
         <Header />
 
-        <div className="container mx-auto rounded-lg mt-4 lg:h-110  grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-4">
+        <div className="container mx-auto rounded-lg mt-4 lg:h-150  grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-4">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
               <h1 className="text-2xl font-bold">
@@ -54,6 +75,30 @@ const Home = async () => {
             </div>
             <SearchInput />
             <QuickSearchButtons />
+            <PageSectionTitle>Seus agendamentos</PageSectionTitle>
+            {confirmedBookings.length > 0 ? (
+              <Carousel
+                opts={{
+                  align: "start",
+                }}
+                className="w-full max-w-full"
+              >
+                <CarouselContent className="">
+                  {confirmedBookings.map((booking) => (
+                    <CarouselItem key={booking.id} className="pl-4 ">
+                      <BookingItem key={booking.id} booking={booking} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+
+                <CarouselPrevious className="hidden lg:flex" />
+                <CarouselNext className="hidden lg:flex" />
+              </Carousel>
+            ) : (
+              <p className="text-muted-foreground">
+                Você não tem agendamentos confirmados.
+              </p>
+            )}
           </div>
           <div className="lg:relative rounded-lg overflow-hidden">
             <Image
@@ -90,7 +135,7 @@ const Home = async () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          {/* O shadcn já posiciona os botões automaticamente se você quiser */}
+
           <CarouselPrevious className="hidden lg:flex" />
           <CarouselNext className="hidden lg:flex" />
         </Carousel>
