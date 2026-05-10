@@ -95,13 +95,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
       <SheetTrigger asChild>
         <Card className="flex h-full w-full min-w-full cursor-pointer flex-row items-center justify-between p-0">
           <div className="flex flex-1 flex-col gap-4 p-4">
-            <Badge
-              className={
-                status === "confirmed"
-                  ? "bg-primary/10 text-primary uppercase"
-                  : "bg-muted text-muted-foreground uppercase"
-              }
-            >
+            <Badge variant={status === "confirmed" ? "default" : "secondary"}>
               {status === "confirmed"
                 ? "Confirmado"
                 : status === "finished"
@@ -120,7 +114,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             </div>
           </div>
 
-          <div className="flex h-full w-[106px] flex-col items-center justify-center border-l py-3">
+          <div className="flex h-full w-26.5 flex-col items-center justify-center border-l py-3">
             <p className="text-xs capitalize">
               {displayDate.toLocaleDateString("pt-BR", { month: "long" })}
             </p>
@@ -137,7 +131,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
         </Card>
       </SheetTrigger>
 
-      <SheetContent className="w-[370px] overflow-y-auto p-0">
+      <SheetContent className="w-92.5 overflow-y-auto p-0">
         <SheetHeader className="px-5 pt-6">
           <div className="flex items-center justify-between">
             <SheetTitle>Informações da Reserva</SheetTitle>
@@ -146,7 +140,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
         <div className="space-y-6 px-5 py-6">
           {/* Imagem do mapa com informações da barbearia */}
-          <div className="relative h-[180px] w-full overflow-hidden rounded-lg">
+          <div className="relative h-45 w-full overflow-hidden rounded-lg">
             <Image
               src="/map.png"
               alt="Localização da barbearia"

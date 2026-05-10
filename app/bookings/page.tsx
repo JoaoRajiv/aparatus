@@ -36,16 +36,16 @@ const BookingsPage = async () => {
   const now = new Date();
 
   const confirmedBookings = bookings.filter(
-    (booking) => !booking.cancelled && new Date(booking.date) >= now
+    (booking) => !booking.cancelled && new Date(booking.date) >= now,
   );
 
   const finishedBookings = bookings.filter(
-    (booking) => booking.cancelled || new Date(booking.date) < now
+    (booking) => booking.cancelled || new Date(booking.date) < now,
   );
 
   return (
-    <main className="flex h-screen min-h-screen flex-col mt-16">
-      <div className="flex-1">
+    <main className="flex h-screen min-h-screen flex-col mt-16 ">
+      <div className="flex-1 lg:container mx-auto">
         <PageContainer>
           <Header />
           <h1 className="text-foreground text-xl font-bold">Agendamentos</h1>
@@ -53,7 +53,7 @@ const BookingsPage = async () => {
           {confirmedBookings.length > 0 && (
             <PageSection>
               <PageSectionTitle>Confirmados</PageSectionTitle>
-              <div className="space-y-3">
+              <div className="space-y-3 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {confirmedBookings.map((booking) => (
                   <BookingItem key={booking.id} booking={booking} />
                 ))}
@@ -64,7 +64,7 @@ const BookingsPage = async () => {
           {finishedBookings.length > 0 && (
             <PageSection>
               <PageSectionTitle>Finalizados</PageSectionTitle>
-              <div className="space-y-3">
+              <div className="space-y-3 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {finishedBookings.map((booking) => (
                   <BookingItem key={booking.id} booking={booking} />
                 ))}

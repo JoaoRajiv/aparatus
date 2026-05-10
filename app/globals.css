@@ -190,3 +190,19 @@
     @apply bg-background text-foreground;
   }
 }
+
+#nprogress .bar {
+  z-index: 99999 !important;
+  /* Opcional: Deixar a barra um pouco mais grossa para destacar bem */
+  height: 4px !important;
+}
+
+#nprogress .peg {
+  box-shadow:
+    0 0 10px var(--primary),
+    0 0 5px var(--primary) !important;
+}
+
+#nprogress .spinner {
+  z-index: 99999 !important;
+}

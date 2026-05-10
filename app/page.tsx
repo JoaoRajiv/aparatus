@@ -52,8 +52,6 @@ const Home = async () => {
   return (
     <main className="mt-16">
       <PageContainer>
-        <Header />
-
         <div className="container mx-auto rounded-lg mt-4 lg:h-150  grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-6 mb-4">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
@@ -129,7 +127,7 @@ const Home = async () => {
           <CarouselContent className="-ml-4">
             {recommendedBarbershops.map((barbershop) => (
               <CarouselItem key={barbershop.id} className="pl-4 basis-auto">
-                <div className="w-[300px]">
+                <div className="w-75">
                   <BarbershopItem barbershop={barbershop} />
                 </div>
               </CarouselItem>
@@ -151,7 +149,7 @@ const Home = async () => {
           <CarouselContent>
             {popularBarbershops.map((barbershop) => (
               <CarouselItem key={barbershop.id} className="pl-4 basis-auto">
-                <div className="w-[300px]">
+                <div className="w-75">
                   <BarbershopItem barbershop={barbershop} />
                 </div>
               </CarouselItem>

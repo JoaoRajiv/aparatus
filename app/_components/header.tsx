@@ -23,10 +23,11 @@ const Header = () => {
         <Link href={"/"}>
           <Image
             src="/logo.svg"
-            className="dark:invert"
             alt="Aparatus"
-            width={100}
-            height={26.09}
+            width={120}
+            height={32}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 150px, 120px"
+            className="dark:invert"
           />
         </Link>
 
@@ -43,7 +44,7 @@ const Header = () => {
                 <MenuIcon />
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-[85vw] max-w-[370px] p-0">
+            <SheetContent className="w-85vw max-w-92.5 p-0">
               <SheetHeader className="border-b px-5 py-6 text-left">
                 <SheetTitle className="text-lg font-bold">Menu</SheetTitle>
               </SheetHeader>
