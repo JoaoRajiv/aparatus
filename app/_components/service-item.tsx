@@ -120,7 +120,7 @@ export function ServiceItem({ service }: ServiceItemProps) {
   return (
     <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
       <div className="border-border bg-card flex items-center justify-center gap-3 rounded-2xl border border-solid p-3">
-        <div className="relative size-[110px] shrink-0 overflow-hidden rounded-[10px]">
+        <div className="relative size-27.5 shrink-0 overflow-hidden rounded-[10px]">
           <Image
             src={service.barbershop.imageUrl || ""}
             alt={service.name}
