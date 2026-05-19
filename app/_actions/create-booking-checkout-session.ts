@@ -54,7 +54,7 @@ export const createBookingCheckoutSession = actionClient
     }
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2025-11-17.clover",
+      apiVersion: "2026-02-25.clover",
     });
 
     const metadata = {
@@ -66,7 +66,7 @@ export const createBookingCheckoutSession = actionClient
 
     console.log(
       "Creating Stripe checkout session with metadata:",
-      JSON.stringify(metadata, null, 2)
+      JSON.stringify(metadata, null, 2),
     );
 
     const checkoutSession = await stripe.checkout.sessions.create({
