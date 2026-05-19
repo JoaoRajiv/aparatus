@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// @ts-expect-error - no types available for this package
 import "./globals.css";
 import QueryProvider from "./_providers/query-provider";
 import { Toaster } from "sonner";
